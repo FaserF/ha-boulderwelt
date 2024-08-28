@@ -1,0 +1,41 @@
+{
+  "title": "Boulderwelt",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Select the Boulder Hall",
+        "description": "Please select the boulder hall for which you want to see the occupancy level.",
+        "data": {
+          "boulder_hall": "Boulder Hall"
+        }
+      }
+    },
+    "error": {
+      "invalid_boulder_hall": "Invalid selection. Please choose a valid boulder hall."
+    },
+    "abort": {
+      "single_instance_allowed": "Only one instance of this integration is allowed."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Boulderwelt Integration Options",
+        "description": "Configure settings for the selected boulder hall.",
+        "data": {
+          "boulder_hall": "Boulder Hall"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "boulderwelt_level": {
+        "name": "Boulderwelt Occupancy",
+        "state": {
+          "level": "Occupancy Level"
+        }
+      }
+    }
+  }
+}

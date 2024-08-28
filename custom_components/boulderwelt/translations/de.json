@@ -1,0 +1,41 @@
+{
+  "title": "Boulderwelt",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Wähle die Boulderhalle",
+        "description": "Bitte wähle die Boulderhalle aus, von der du die Auslastung sehen möchtest.",
+        "data": {
+          "boulder_hall": "Boulderhalle"
+        }
+      }
+    },
+    "error": {
+      "invalid_boulder_hall": "Ungültige Auswahl. Bitte wähle eine gültige Boulderhalle aus."
+    },
+    "abort": {
+      "single_instance_allowed": "Es ist nur eine Instanz dieser Integration erlaubt."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Optionen für Boulderwelt Integration",
+        "description": "Konfiguriere die Einstellungen für die ausgewählte Boulderhalle.",
+        "data": {
+          "boulder_hall": "Boulderhalle"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "boulderwelt_level": {
+        "name": "Boulderwelt Auslastung",
+        "state": {
+          "level": "Auslastung"
+        }
+      }
+    }
+  }
+}
