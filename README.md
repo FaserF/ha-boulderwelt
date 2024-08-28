@@ -7,7 +7,7 @@ The `boulderwelt` sensor will give you informations about the current utilizatio
 
 This integration is a official HACS Integration.
 
-Open HACS then install the "Deutsche Bahn" integration or use the link below.
+Open HACS then install the "Boulderwelt" integration or use the link below.
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=FaserF&repository=ha-boulderwelt&category=integration)
 
@@ -25,7 +25,7 @@ where `<config>` is your Home Assistant configuration directory.
 
 ## Configuration
 
-Go to Configuration -> Integrations and click on "add integration". Then search for "Deutsche Bahn".
+Go to Configuration -> Integrations and click on "add integration". Then search for "Boulderwelt".
 
 [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=boulderwelt)
 
