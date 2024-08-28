@@ -5,7 +5,7 @@ The `boulderwelt` sensor will give you informations about the current utilizatio
 ## Installation
 ### 1. Using HACS (recommended way)
 
-This integration is a official HACS Integration.
+This integration is soon a official HACS Integration.
 
 Open HACS then install the "Boulderwelt" integration or use the link below.
 
