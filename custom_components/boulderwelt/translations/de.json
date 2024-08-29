@@ -6,12 +6,14 @@
         "title": "Wähle die Boulderhalle",
         "description": "Bitte wähle die Boulderhalle aus, von der du die Auslastung sehen möchtest.",
         "data": {
-          "boulder_hall": "Boulderhalle"
+          "boulder_hall": "Boulderhalle",
+          "scan_interval": "Scan Intervall (Minuten)"
         }
       }
     },
     "error": {
-      "invalid_boulder_hall": "Ungültige Auswahl. Bitte wähle eine gültige Boulderhalle aus."
+      "invalid_boulder_hall": "Ungültige Auswahl. Bitte wähle eine gültige Boulderhalle aus.",
+      "invalid_scan_interval": "Ungültiger Scan Intervall. Bitte wähle einen Wert zwischen 1 und 60 Minuten."
     },
     "abort": {
       "single_instance_allowed": "Es ist nur eine Instanz dieser Integration erlaubt."
@@ -23,7 +25,7 @@
         "title": "Optionen für Boulderwelt Integration",
         "description": "Konfiguriere die Einstellungen für die ausgewählte Boulderhalle.",
         "data": {
-          "boulder_hall": "Boulderhalle"
+          "scan_interval": "Scan Intervall (Minuten)"
         }
       }
     }

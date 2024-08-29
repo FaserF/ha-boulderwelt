@@ -9,16 +9,15 @@ from .const import DOMAIN, BOULDER_HALL_URLS
 
 _LOGGER = logging.getLogger(__name__)
 
-MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=5)
-
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Boulderwelt sensor based on a config entry."""
     boulder_hall = entry.data.get("boulder_hall")
     url = BOULDER_HALL_URLS[boulder_hall]
+    scan_interval = entry.data.get("scan_interval", 5)
 
-    _LOGGER.debug(f"Setting up sensor for {boulder_hall} with URL {url}")
+    _LOGGER.debug(f"Setting up sensor for {boulder_hall} with URL {url} and scan_interval {scan_interval} minutes")
 
-    coordinator = BoulderweltDataUpdateCoordinator(hass, url)
+    coordinator = BoulderweltDataUpdateCoordinator(hass, url, scan_interval)
     await coordinator.async_config_entry_first_refresh()
 
     if coordinator.data is not None:
@@ -28,14 +27,15 @@ async def async_setup_entry(hass, entry, async_add_entities):
         _LOGGER.warning(f"Coordinator data is None, no entity added for {boulder_hall}")
 
 class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
-    def __init__(self, hass, url):
+    def __init__(self, hass, url, scan_interval):
         """Initialize the data updater."""
         self.url = url
+        self.hass = hass
         super().__init__(
             hass,
             _LOGGER,
             name="Boulderwelt Data",
-            update_interval=MIN_TIME_BETWEEN_UPDATES,
+            update_interval=timedelta(minutes=scan_interval),
         )
 
     async def _async_update_data(self):

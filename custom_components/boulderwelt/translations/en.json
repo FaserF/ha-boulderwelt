@@ -6,12 +6,14 @@
         "title": "Select the Boulder Hall",
         "description": "Please select the boulder hall for which you want to see the occupancy level.",
         "data": {
-          "boulder_hall": "Boulder Hall"
+          "boulder_hall": "Boulder Hall",
+          "scan_interval": "Scan Interval (minutes)"
         }
       }
     },
     "error": {
-      "invalid_boulder_hall": "Invalid selection. Please choose a valid boulder hall."
+      "invalid_boulder_hall": "Invalid selection. Please choose a valid boulder hall.",
+      "invalid_scan_interval": "Invalid scan interval. Please enter a value between 1 and 60 minutes."
     },
     "abort": {
       "single_instance_allowed": "Only one instance of this integration is allowed."
@@ -23,7 +25,7 @@
         "title": "Boulderwelt Integration Options",
         "description": "Configure settings for the selected boulder hall.",
         "data": {
-          "boulder_hall": "Boulder Hall"
+          "scan_interval": "Scan Interval (minutes)"
         }
       }
     }

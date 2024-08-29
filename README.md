@@ -5,7 +5,7 @@ The `boulderwelt` sensor will give you informations about the current utilizatio
 ## Installation
 ### 1. Using HACS (recommended way)
 
-This integration is soon a official HACS Integration.
+This integration is a official HACS Integration.
 
 Open HACS then install the "Boulderwelt" integration or use the link below.
 
@@ -31,6 +31,7 @@ Go to Configuration -> Integrations and click on "add integration". Then search 
 
 ### Configuration Variables
 - **boulder hall**: Select the boulderwelt boulder hall, from where the data should be fetched
+- **scan interval**: Choose the time in minutes when the sensor should be refreshed
 
 ## Bug reporting
 Open an issue over at [github issues](https://github.com/FaserF/ha-boulderwelt/issues). Please prefer sending over a log with debugging enabled.
