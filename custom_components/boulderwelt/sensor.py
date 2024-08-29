@@ -2,7 +2,7 @@ import aiohttp
 import logging
 from datetime import timedelta
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.const import CONF_NAME
+from homeassistant.const import CONF_NAME, PERCENTAGE
 from homeassistant.helpers.update_coordinator import CoordinatorEntity, DataUpdateCoordinator
 
 from .const import DOMAIN, BOULDER_HALL_URLS
@@ -27,12 +27,10 @@ async def async_setup_entry(hass, entry, async_add_entities):
     else:
         _LOGGER.warning(f"Coordinator data is None, no entity added for {boulder_hall}")
 
-
 class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
     def __init__(self, hass, url):
         """Initialize the data updater."""
         self.url = url
-        self.hass = hass
         super().__init__(
             hass,
             _LOGGER,
@@ -49,11 +47,15 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
                     response.raise_for_status()
                     data = await response.json()
                     _LOGGER.debug(f"Received data: {data}")
-                    return data
+                    if "level" in data and data.get("success", False):
+                        return data
+                    else:
+                        _LOGGER.debug("Data is missing 'level' or 'success' is False, defaulting to 0")
+                        return {"level": 0}
         except Exception as e:
             _LOGGER.error(f"Error fetching data from {self.url}: {e}")
-            return None
-
+            _LOGGER.debug("Returning default value 0 due to exception")
+            return {"level": 0}
 
 class BoulderweltSensor(CoordinatorEntity, SensorEntity):
     """Representation of a Boulderwelt sensor."""
@@ -62,7 +64,7 @@ class BoulderweltSensor(CoordinatorEntity, SensorEntity):
         """Initialize the sensor."""
         super().__init__(coordinator)
         self._attr_name = f"{name} Level"
-        self._attr_unit_of_measurement = "%"
+        self._attr_unit_of_measurement = PERCENTAGE
         self._attr_unique_id = f"boulderwelt_{name.lower().replace(' ', '_')}_level"
         self._attr_icon = "mdi:carabiner"
         self._state = None
@@ -71,9 +73,6 @@ class BoulderweltSensor(CoordinatorEntity, SensorEntity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        if self.coordinator.data:
-            level = self.coordinator.data.get("level")
-            _LOGGER.debug(f"Returning state for {self._attr_name}: {level}")
-            return level
-        _LOGGER.debug(f"No data available for {self._attr_name}")
-        return None
+        level = self.coordinator.data.get("level", 0)  # Default to 0 if data is None or missing
+        _LOGGER.debug(f"Returning state for {self._attr_name}: {level}")
+        return level
