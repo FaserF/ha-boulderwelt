@@ -1,6 +1,6 @@
 import aiohttp
 import logging
-from datetime import timedelta
+from datetime import timedelta, datetime
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import CONF_NAME, PERCENTAGE
 from homeassistant.helpers.update_coordinator import CoordinatorEntity, DataUpdateCoordinator
@@ -67,12 +67,23 @@ class BoulderweltSensor(CoordinatorEntity, SensorEntity):
         self._attr_unit_of_measurement = PERCENTAGE
         self._attr_unique_id = f"boulderwelt_{name.lower().replace(' ', '_')}_level"
         self._attr_icon = "mdi:carabiner"
-        self._state = None
         _LOGGER.debug(f"Initialized sensor: {self._attr_name}")
 
     @property
     def state(self):
         """Return the state of the sensor."""
-        level = self.coordinator.data.get("level", 0)  # Default to 0 if data is None or missing
-        _LOGGER.debug(f"Returning state for {self._attr_name}: {level}")
-        return level
+        level = self.coordinator.data.get("level")
+
+        # Get the current hour
+        current_hour = datetime.now().hour
+
+        # Check if the current time is between 0 and 5 hours
+        if level is None or (level == 0 and 0 <= current_hour < 5):
+            _LOGGER.debug(f"Returning default value 0 for {self._attr_name} because it's between 0 and 5 AM and the API most likely is shut off.")
+            return 0
+        elif level is None:
+            _LOGGER.debug(f"Returning unknown for {self._attr_name} because level is None")
+            return None
+        else:
+            _LOGGER.debug(f"Returning state for {self._attr_name}: {level}")
+            return level
