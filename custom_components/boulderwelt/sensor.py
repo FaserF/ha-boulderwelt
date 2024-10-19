@@ -40,6 +40,10 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         """Fetch data from API asynchronously."""
+        current_time = datetime.now().time()
+        if current_time >= datetime.strptime("00:00", "%H:%M").time() and current_time < datetime.strptime("08:00", "%H:%M").time():
+            _LOGGER.debug("Current time is between 00:00 and 08:00, returning 0% usage.")
+            return {"level": 0}  # Returning 0% usage instead of fetching data
         try:
             async with aiohttp.ClientSession() as session:
                 _LOGGER.debug(f"Fetching data from {self.url}")
