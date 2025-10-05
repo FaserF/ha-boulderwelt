@@ -3,18 +3,6 @@
   "extends": [
     "config:base"
   ],
-  "regexManagers": [
-    {
-      "fileMatch": [
-        "/manifest.json$"
-      ],
-      "matchStrings": [
-        "schiene==?(?<currentValue>.+?)[\"']?\\s+"
-      ],
-      "datasourceTemplate": "pypi",
-      "depNameTemplate": "schiene"
-    }
-  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
