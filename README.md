@@ -1,41 +1,55 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
-# Boulderwelt Homeassistant Sensor
-The `boulderwelt` sensor will give you informations about the current utilization of a boulderwelt hall
 
-## Installation
-### 1. Using HACS (recommended way)
+# Boulderwelt Home Assistant Sensor 🧗
 
-This integration is a official HACS Integration.
+The `boulderwelt` sensor provides information about the current utilization of a **Boulderwelt** hall.
 
-Open HACS then install the "Boulderwelt" integration or use the link below.
+## Features ✨
+
+- **Live Utilization**: Get real-time occupancy data.
+- **Hall Selection**: Supports multiple Boulderwelt locations.
+- **Statistics**: Calculate averages for specific days.
+
+## Installation 🛠️
+
+### 1. Using HACS (Recommended)
+
+This integration is an **official HACS Integration**.
+
+1.  Open HACS.
+2.  Search for "Boulderwelt".
+3.  Click **Download**.
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=FaserF&repository=ha-boulderwelt&category=integration)
 
-If you use this method, your component will always update to the latest version.
+> [!TIP]
+> Using HACS ensures you always have the latest version.
 
-### 2. Manual
+### 2. Manual Installation
 
-- Download the latest zip release from [here](https://github.com/FaserF/ha-boulderwelt/releases/latest)
-- Extract the zip file
-- Copy the folder "boulderwelt" from within custom_components with all of its components to `<config>/custom_components/`
+1.  Download the latest [Release](https://github.com/FaserF/ha-boulderwelt/releases/latest).
+2.  Extract the ZIP file.
+3.  Copy the `boulderwelt` folder from `custom_components` to your Home Assistant's `<config>/custom_components/` directory.
 
-where `<config>` is your Home Assistant configuration directory.
+> [!WARNING]
+> Do not download the files directly from the `master` branch as they might be unstable.
 
->__NOTE__: Do not download the file by using the link above directly, the status in the "master" branch can be in development and therefore is maybe not working.
+## Configuration ⚙️
 
-## Configuration
-
-Go to Configuration -> Integrations and click on "add integration". Then search for "Boulderwelt".
+1.  Go to **Settings** -> **Devices & Services**.
+2.  Click **Add Integration**.
+3.  Search for "Boulderwelt".
 
 [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=boulderwelt)
 
-### Configuration Variables
-- **boulder hall**: Select the boulderwelt boulder hall, from where the data should be fetched
-- **scan interval**: Choose the time in minutes when the sensor should be refreshed
+### Options
+- **Boulder Hall**: Select the location to fetch data from.
+- **Scan Interval**: Update frequency in minutes.
 
-## Accessing the data
+## Accessing the Data 📊
 
-### Custom sensor
+### Custom Sensors example
+Add these sensors to your `configuration.yaml` to track daily averages:
 Add a custom sensor in your configuration.yaml
 
 ```yaml
@@ -210,7 +224,7 @@ automation:
               {'day': 'Freitag', 'value': states('sensor.boulderwelt_location_friday_avg') | float(70)}
             ] %}
             {% set sorted_days_location = days_location | sort(attribute='value') %}
-            The best days to go to the hall in the weekdays, based on the utilization from last week are: 
+            The best days to go to the hall in the weekdays, based on the utilization from last week are:
             1. {{ sorted_days_location[0].day }} (Durchschnittliche Auslastung: {{ sorted_days_location[0].value }} %)
             2. {{ sorted_days_location[1].day }} (Durchschnittliche Auslastung: {{ sorted_days_location[1].value }} %)
             3. {{ sorted_days_location[2].day }} (Durchschnittliche Auslastung: {{ sorted_days_location[2].value }} %)
@@ -220,7 +234,7 @@ automation:
               {'day': 'Sonntag', 'value': states('sensor.boulderwelt_location_sunday_avg') | float(70)}
             ] %}
             {% set sorted_days_weekend_location = days_weekend_location | sort(attribute='value') %}
-            The best day at the weekend to go to the hall, based on the utilization from last week is: 
+            The best day at the weekend to go to the hall, based on the utilization from last week is:
             {{ sorted_days_weekend_location[0].day }} (Durchschnittliche Auslastung: {{ sorted_days_weekend_location[0].value }} %)
 ```
 
