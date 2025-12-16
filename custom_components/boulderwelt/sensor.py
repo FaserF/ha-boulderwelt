@@ -1,5 +1,6 @@
 import aiohttp
 import logging
+from homeassistant.helpers import aiohttp_client
 from datetime import timedelta, datetime
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import CONF_NAME, PERCENTAGE
@@ -45,17 +46,17 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER.debug("Current time is between 00:00 and 08:00, returning 0% usage.")
             return {"level": 0}  # Returning 0% usage instead of fetching data
         try:
-            async with aiohttp.ClientSession() as session:
-                _LOGGER.debug(f"Fetching data from {self.url}")
-                async with session.get(self.url) as response:
-                    response.raise_for_status()
-                    data = await response.json()
-                    _LOGGER.debug(f"Received data: {data}")
-                    if "level" in data and data.get("success", False):
-                        return data
-                    else:
-                        _LOGGER.debug("Data is missing 'level' or 'success' is False, defaulting to 0")
-                        return {"level": 0}
+            session = aiohttp_client.async_get_clientsession(self.hass)
+            _LOGGER.debug(f"Fetching data from {self.url}")
+            async with session.get(self.url) as response:
+                response.raise_for_status()
+                data = await response.json()
+                _LOGGER.debug(f"Received data: {data}")
+                if "level" in data and data.get("success", False):
+                    return data
+                else:
+                    _LOGGER.debug("Data is missing 'level' or 'success' is False, defaulting to 0")
+                    return {"level": 0}
         except Exception as e:
             _LOGGER.error(f"Error fetching data from {self.url}: {e}")
             _LOGGER.debug("Returning default value 0 due to exception")
