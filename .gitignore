@@ -2,3 +2,4 @@
 megalinter-reports/
 github_conf/
 /tests/__pycache__
+test_output.txt
