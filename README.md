@@ -3,7 +3,7 @@
 [![GitHub Release](https://img.shields.io/github/release/FaserF/ha-boulderwelt.svg?style=flat-square)](https://github.com/FaserF/ha-boulderwelt/releases)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/FaserF/ha-boulderwelt/ci.yml?branch=main&style=flat-square)](https://github.com/FaserF/ha-boulderwelt/actions)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=flat-square)](https://github.com/hacs/integration)
-[![BuyMeCoffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/faserf)
+[![GitHub Sponsors](https://img.shields.io/badge/sponsor-GitHub-pink.svg?style=flat-square)](https://github.com/sponsors/FaserF)
 
 Monitor the real-time occupancy of your favorite **Boulderwelt** hall directly in Home Assistant. Plan your next session when it's less crowded!
 
