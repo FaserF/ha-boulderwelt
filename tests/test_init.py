@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, AsyncMock
 from homeassistant.core import HomeAssistant
 from homeassistant.util import dt as dt_util
 
@@ -18,7 +18,7 @@ async def test_coordinator_update_data_success(hass: HomeAssistant):
 
         mock_response = MagicMock()
         mock_response.status = 200
-        mock_response.json = pytest.AsyncMock(return_value={"level": 50, "success": True})
+        mock_response.json = AsyncMock(return_value={"level": 50, "success": True})
         mock_response.raise_for_status = MagicMock()
 
         mock_session.return_value.get.return_value.__aenter__.return_value = mock_response
