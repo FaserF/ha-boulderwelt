@@ -65,7 +65,7 @@ Monitor the real-time occupancy of your favorite **Boulderwelt** hall directly i
 | Entity | Type | Description |
 | --- | --- | --- |
 | `sensor.<hall>_occupancy` | Sensor | Current occupancy in % |
-| `binary_sensor.<hall>_highly_occupied` | Binary Sensor | `on` if occupancy >= 75% |
+| `binary_sensor.<hall>_highly_occupied` | Binary Sensor | `on` if occupancy >= 75% (disabled by default) |
 
 ### Example Dashboard Card
 

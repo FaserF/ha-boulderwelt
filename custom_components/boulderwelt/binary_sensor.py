@@ -22,6 +22,7 @@ class BoulderweltHighOccupancySensor(CoordinatorEntity, BinarySensorEntity):
     _attr_has_entity_name = True
     _attr_translation_key = "highly_occupied"
     _attr_device_class = BinarySensorDeviceClass.OCCUPANCY
+    _attr_entity_registry_enabled_default = False
 
     def __init__(self, coordinator, name, entry_id):
         """Initialize the sensor."""
