@@ -1,257 +1,111 @@
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
+# Boulderwelt Home Assistant Integration 🧗‍♂️
 
-# Boulderwelt Home Assistant Sensor 🧗
+[![GitHub Release](https://img.shields.io/github/release/FaserF/ha-boulderwelt.svg?style=flat-square)](https://github.com/FaserF/ha-boulderwelt/releases)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/FaserF/ha-boulderwelt/ci.yml?branch=main&style=flat-square)](https://github.com/FaserF/ha-boulderwelt/actions)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=flat-square)](https://github.com/hacs/integration)
+[![BuyMeCoffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/faserf)
 
-The `boulderwelt` sensor provides information about the current utilization of a **Boulderwelt** hall.
+Monitor the real-time occupancy of your favorite **Boulderwelt** hall directly in Home Assistant. Plan your next session when it's less crowded!
+
+---
 
 ## Features ✨
 
-- **Live Utilization**: Get real-time occupancy data.
-- **Hall Selection**: Supports multiple Boulderwelt locations.
-- **Statistics**: Calculate averages for specific days.
+- **Live Occupancy**: Real-time percentage of hall utilization.
+- **High Occupancy Alert**: Binary sensor indicating if the hall is currently "full" (>= 75%).
+- **Multi-Location Support**: Configure multiple halls if you frequent different spots.
+- **Configurable Updates**: Set your own scan interval (default: 5 minutes).
+- **Native UI Configuration**: Fully supports Config Flow and Options Flow.
+- **Device Support**: All entities are properly grouped under a single device per hall.
+
+## Supported Locations 📍
+
+- München Ost
+- München Süd
+- München West
+- Hamburg
+- Dortmund
+- Frankfurt
+- Karlsruhe
+- Regensburg
+
+---
 
 ## Installation 🛠️
 
 ### 1. Using HACS (Recommended)
 
-This integration is an **official HACS Integration**.
-
-1.  Open HACS.
-2.  Search for "Boulderwelt".
-3.  Click **Download**.
-
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=FaserF&repository=ha-boulderwelt&category=integration)
-
-> [!TIP]
-> Using HACS ensures you always have the latest version.
+1. Open **HACS** in your Home Assistant instance.
+2. Click on **Integrations**.
+3. Search for **"Boulderwelt"**.
+4. Click **Download** and restart Home Assistant.
 
 ### 2. Manual Installation
 
-1.  Download the latest [Release](https://github.com/FaserF/ha-boulderwelt/releases/latest).
-2.  Extract the ZIP file.
-3.  Copy the `boulderwelt` folder from `custom_components` to your Home Assistant's `<config>/custom_components/` directory.
+1. Download the `boulderwelt.zip` from the latest [release](https://github.com/FaserF/ha-boulderwelt/releases/latest).
+2. Extract the archive and copy the `custom_components/boulderwelt` directory into your Home Assistant's `custom_components` folder.
+3. Restart Home Assistant.
 
-> [!WARNING]
-> Do not download the files directly from the `master` branch as they might be unstable.
+---
 
 ## Configuration ⚙️
 
-1.  Go to **Settings** -> **Devices & Services**.
-2.  Click **Add Integration**.
-3.  Search for "Boulderwelt".
+1. Navigate to **Settings** -> **Devices & Services**.
+2. Click **Add Integration** in the bottom right.
+3. Search for **"Boulderwelt"**.
+4. Select your hall and set the desired update interval.
 
-[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=boulderwelt)
+> [!TIP]
+> You can change the update interval any time by clicking **Configure** on the integration card.
 
-### Options
-- **Boulder Hall**: Select the location to fetch data from.
-- **Scan Interval**: Update frequency in minutes.
+---
 
-## Accessing the Data 📊
+## Sensors & Entities 📊
 
-### Custom Sensors example
-Add these sensors to your `configuration.yaml` to track daily averages:
-Add a custom sensor in your configuration.yaml
+| Entity | Type | Description |
+| --- | --- | --- |
+| `sensor.<hall>_occupancy` | Sensor | Current occupancy in % |
+| `binary_sensor.<hall>_highly_occupied` | Binary Sensor | `on` if occupancy >= 75% |
 
-```yaml
-- platform: template
-  sensors:
-    boulderwelt_location_monday_avg:
-      friendly_name: "Boulderwelt location Montag Durchschnitt"
-      unit_of_measurement: "%"
-      value_template: >
-        {% set day = now().strftime('%A') %}
-        {% if day == 'Wednesday' %}
-          {{ states('sensor.boulderwelt_location_level_mean') }}
-        {% else %}
-          {{ states('sensor.boulderwelt_location_monday_avg') }}
-        {% endif %}
-
-    boulderwelt_location_tuesday_avg:
-      friendly_name: "Boulderwelt location Dienstag Durchschnitt"
-      unit_of_measurement: "%"
-      value_template: >
-        {% set day = now().strftime('%A') %}
-        {% if day == 'Thursday' %}
-          {{ states('sensor.boulderwelt_location_level_mean') }}
-        {% else %}
-          {{ states('sensor.boulderwelt_location_tuesday_avg') }}
-        {% endif %}
-
-    boulderwelt_location_wednesday_avg:
-      friendly_name: "Boulderwelt location Mittwoch Durchschnitt"
-      unit_of_measurement: "%"
-      value_template: >
-        {% set day = now().strftime('%A') %}
-        {% if day == 'Wednesday' %}
-          {{ states('sensor.boulderwelt_location_level_mean') }}
-        {% else %}
-          {{ states('sensor.boulderwelt_location_wednesday_avg') }}
-        {% endif %}
-
-    boulderwelt_location_thursday_avg:
-      friendly_name: "Boulderwelt location Donnerstag Durchschnitt"
-      unit_of_measurement: "%"
-      value_template: >
-        {% set day = now().strftime('%A') %}
-        {% if day == 'Thursday' %}
-          {{ states('sensor.boulderwelt_location_level_mean') }}
-        {% else %}
-          {{ states('sensor.boulderwelt_location_thursday_avg') }}
-        {% endif %}
-
-    boulderwelt_location_friday_avg:
-      friendly_name: "Boulderwelt location Freitag Durchschnitt"
-      unit_of_measurement: "%"
-      value_template: >
-        {% set day = now().strftime('%A') %}
-        {% if day == 'Thursday' %}
-          {{ states('sensor.boulderwelt_location_level_mean') }}
-        {% else %}
-          {{ states('sensor.boulderwelt_location_friday_avg') }}
-        {% endif %}
-
-- platform: statistics
-  name: "Boulderwelt Location Level Mean"
-  entity_id: sensor.boulderwelt_location_level
-  state_characteristic: mean
-  max_age:
-    hours: 24
-  sampling_size: 24
-```
-
-### Automations
-```yaml
-automation:
-  - id: update_boulderwelt_sensor_average
-    alias: "Update Boulderwelt Sensor Average"
-    trigger:
-      - platform: time
-        at: "23:59:00"
-    action:
-      - choose:
-          - conditions:
-              - condition: time
-                weekday:
-                  - mon
-            sequence:
-              - service: homeassistant.update_entity
-                target:
-                  entity_id:
-                    - sensor.boulderwelt_location_monday_avg
-
-          - conditions:
-              - condition: time
-                weekday:
-                  - tue
-            sequence:
-              - service: homeassistant.update_entity
-                target:
-                  entity_id:
-                    - sensor.boulderwelt_location_tuesday_avg
-
-          - conditions:
-              - condition: time
-                weekday:
-                  - wed
-            sequence:
-              - service: homeassistant.update_entity
-                target:
-                  entity_id:
-                    - sensor.boulderwelt_location_wednesday_avg
-
-          - conditions:
-              - condition: time
-                weekday:
-                  - thu
-            sequence:
-              - service: homeassistant.update_entity
-                target:
-                  entity_id:
-                    - sensor.boulderwelt_location_thursday_avg
-
-          - conditions:
-              - condition: time
-                weekday:
-                  - fri
-            sequence:
-              - service: homeassistant.update_entity
-                target:
-                  entity_id:
-                    - sensor.boulderwelt_location_friday_avg
-
-          - conditions:
-              - condition: time
-                weekday:
-                  - sat
-            sequence:
-              - service: homeassistant.update_entity
-                target:
-                  entity_id:
-                    - sensor.boulderwelt_location_saturday_avg
-
-          - conditions:
-              - condition: time
-                weekday:
-                  - sun
-            sequence:
-              - service: homeassistant.update_entity
-                target:
-                  entity_id:
-                    - sensor.boulderwelt_location_sunday_avg
-```
+### Example Dashboard Card
 
 ```yaml
-automation:
-  - id: remind_for_bouldern
-    alias: "remind for Bouldern"
-    trigger:
-      - platform: time
-        at: "19:00:00"
-    condition:
-      - condition: time
-        weekday:
-          - sun
-    action:
-      - service: telegram_bot.send_message
-        data:
-          target: !secret telegram_chat_bouldern
-          message: >
-            {% set days_location = [
-              {'day': 'Montag', 'value': states('sensor.boulderwelt_location_monday_avg') | float(70)},
-              {'day': 'Dienstag', 'value': states('sensor.boulderwelt_location_tuesday_avg') | float(70)},
-              {'day': 'Mittwoch', 'value': states('sensor.boulderwelt_location_wednesday_avg') | float(70)},
-              {'day': 'Donnerstag', 'value': states('sensor.boulderwelt_location_thursday_avg') | float(70)},
-              {'day': 'Freitag', 'value': states('sensor.boulderwelt_location_friday_avg') | float(70)}
-            ] %}
-            {% set sorted_days_location = days_location | sort(attribute='value') %}
-            The best days to go to the hall in the weekdays, based on the utilization from last week are:
-            1. {{ sorted_days_location[0].day }} (Durchschnittliche Auslastung: {{ sorted_days_location[0].value }} %)
-            2. {{ sorted_days_location[1].day }} (Durchschnittliche Auslastung: {{ sorted_days_location[1].value }} %)
-            3. {{ sorted_days_location[2].day }} (Durchschnittliche Auslastung: {{ sorted_days_location[2].value }} %)
-
-            {% set days_weekend_location = [
-              {'day': 'Samstag', 'value': states('sensor.boulderwelt_location_saturday_avg') | float(70)},
-              {'day': 'Sonntag', 'value': states('sensor.boulderwelt_location_sunday_avg') | float(70)}
-            ] %}
-            {% set sorted_days_weekend_location = days_weekend_location | sort(attribute='value') %}
-            The best day at the weekend to go to the hall, based on the utilization from last week is:
-            {{ sorted_days_weekend_location[0].day }} (Durchschnittliche Auslastung: {{ sorted_days_weekend_location[0].value }} %)
+type: entities
+entities:
+  - entity: sensor.boulderwelt_muenchen_ost_occupancy
+    name: München Ost Auslastung
+  - entity: binary_sensor.boulderwelt_muenchen_ost_highly_occupied
+    name: Viel los?
+title: Boulderwelt 🧗
 ```
 
-## Bug reporting
-Open an issue over at [github issues](https://github.com/FaserF/ha-boulderwelt/issues). Please prefer sending over a log with debugging enabled.
+---
 
-To enable debugging enter the following in your configuration.yaml
+## Statistics & Daily Averages 📈
+
+To track daily averages, you can use the built-in Home Assistant statistics platform. Add this to your `configuration.yaml`:
 
 ```yaml
-logger:
-    logs:
-        custom_components.boulderwelt: debug
+sensor:
+  - platform: statistics
+    name: "Boulderwelt Daily Mean"
+    entity_id: sensor.boulderwelt_muenchen_ost_occupancy
+    state_characteristic: mean
+    max_age:
+      hours: 24
 ```
 
-You can then find the log in the HA settings -> System -> Logs -> Enter "boulderwelt" in the search bar -> "Load full logs"
+---
 
-## Thanks to
-Huge thanks to [@knorr3](https://github.com/knorr3) for finding the json files from boulderwelt and the idea!
+## Contributing 🤝
 
-The data is coming from the corresponding [boulderwelt.de](https://www.boulderwelt.de/) website.
+Contributions are welcome! If you find a bug or have a feature request, please open an [issue](https://github.com/FaserF/ha-boulderwelt/issues).
+
+## Credits
+
+- Data provided by [boulderwelt.de](https://www.boulderwelt.de/)
+- Initial idea and API research by [@knorr3](https://github.com/knorr3)
+
+---
+
+*Disclaimer: This integration is not affiliated with, endorsed by, or supported by Boulderwelt. It uses public API endpoints provided by their website.*

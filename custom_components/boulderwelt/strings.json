@@ -3,40 +3,38 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select the Boulder Hall",
-        "description": "Please select the boulder hall for which you want to see the occupancy level.",
+        "title": "Configure Boulderwelt",
+        "description": "Please select the boulder hall you want to monitor.",
         "data": {
           "boulder_hall": "Boulder Hall",
-          "scan_interval": "Scan Interval (minutes)"
+          "scan_interval": "Update Interval (minutes)"
         }
       }
     },
-    "error": {
-      "invalid_boulder_hall": "Invalid selection. Please choose a valid boulder hall.",
-      "invalid_scan_interval": "Invalid scan interval. Please enter a value between 1 and 60 minutes."
-    },
     "abort": {
-      "single_instance_allowed": "Only one instance of this integration is allowed."
+      "already_configured": "This Boulder hall is already configured."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Boulderwelt Integration Options",
-        "description": "Configure settings for the selected boulder hall.",
+        "title": "Boulderwelt Options",
+        "description": "Configure the update interval.",
         "data": {
-          "scan_interval": "Scan Interval (minutes)"
+          "scan_interval": "Update Interval (minutes)"
         }
       }
     }
   },
   "entity": {
     "sensor": {
-      "boulderwelt_level": {
-        "name": "Boulderwelt Occupancy",
-        "state": {
-          "level": "Occupancy Level"
-        }
+      "occupancy": {
+        "name": "Occupancy"
+      }
+    },
+    "binary_sensor": {
+      "highly_occupied": {
+        "name": "Highly Occupied"
       }
     }
   }

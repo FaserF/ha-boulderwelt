@@ -3,40 +3,38 @@
   "config": {
     "step": {
       "user": {
-        "title": "Wähle die Boulderhalle",
-        "description": "Bitte wähle die Boulderhalle aus, von der du die Auslastung sehen möchtest.",
+        "title": "Boulderwelt konfigurieren",
+        "description": "Bitte wähle die Boulderwelt-Halle aus, die du überwachen möchtest.",
         "data": {
-          "boulder_hall": "Boulderhalle",
-          "scan_interval": "Scan Intervall (Minuten)"
+          "boulder_hall": "Boulderwelt Halle",
+          "scan_interval": "Update-Intervall (Minuten)"
         }
       }
     },
-    "error": {
-      "invalid_boulder_hall": "Ungültige Auswahl. Bitte wähle eine gültige Boulderhalle aus.",
-      "invalid_scan_interval": "Ungültiger Scan Intervall. Bitte wähle einen Wert zwischen 1 und 60 Minuten."
-    },
     "abort": {
-      "single_instance_allowed": "Es ist nur eine Instanz dieser Integration erlaubt."
+      "already_configured": "Diese Boulderwelt-Halle ist bereits konfiguriert."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Optionen für Boulderwelt Integration",
-        "description": "Konfiguriere die Einstellungen für die ausgewählte Boulderhalle.",
+        "title": "Boulderwelt Optionen",
+        "description": "Konfiguriere das Update-Intervall.",
         "data": {
-          "scan_interval": "Scan Intervall (Minuten)"
+          "scan_interval": "Update-Intervall (Minuten)"
         }
       }
     }
   },
   "entity": {
     "sensor": {
-      "boulderwelt_level": {
-        "name": "Boulderwelt Auslastung",
-        "state": {
-          "level": "Auslastung"
-        }
+      "occupancy": {
+        "name": "Auslastung"
+      }
+    },
+    "binary_sensor": {
+      "highly_occupied": {
+        "name": "Stark besucht"
       }
     }
   }
