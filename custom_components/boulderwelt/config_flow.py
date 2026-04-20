@@ -1,18 +1,23 @@
+from typing import Any
 import voluptuous as vol
 from homeassistant import config_entries
+from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv
 
 from .const import DOMAIN, BOULDER_HALLS
 
-class BoulderweltConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+
+class BoulderweltConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore
     """Handle a config flow for Boulderwelt."""
 
     VERSION = 1
 
-    async def async_step_user(self, user_input=None):
+    async def async_step_user(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
         """Handle the initial step."""
-        errors = {}
+        errors: dict[str, str] = {}
 
         if user_input is not None:
             # Check if already configured
@@ -20,16 +25,19 @@ class BoulderweltConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self._abort_if_unique_id_configured()
 
             return self.async_create_entry(
-                title=user_input["boulder_hall"],
-                data=user_input
+                title=user_input["boulder_hall"], data=user_input
             )
 
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({
-                vol.Required("boulder_hall"): vol.In(sorted(BOULDER_HALLS)),
-                vol.Optional("scan_interval", default=5): vol.All(cv.positive_int, vol.Clamp(min=1, max=60))
-            }),
+            data_schema=vol.Schema(
+                {
+                    vol.Required("boulder_hall"): vol.In(sorted(BOULDER_HALLS)),
+                    vol.Optional("scan_interval", default=5): vol.All(
+                        cv.positive_int, vol.Clamp(min=1, max=60)
+                    ),
+                }
+            ),
             errors=errors,
         )
 
@@ -54,13 +62,15 @@ class BoulderweltOptionsFlowHandler(config_entries.OptionsFlow):
 
         return self.async_show_form(
             step_id="init",
-            data_schema=vol.Schema({
-                vol.Optional(
-                    "scan_interval",
-                    default=self.config_entry.options.get(
+            data_schema=vol.Schema(
+                {
+                    vol.Optional(
                         "scan_interval",
-                        self.config_entry.data.get("scan_interval", 5)
-                    )
-                ): vol.All(cv.positive_int, vol.Clamp(min=1, max=60))
-            })
+                        default=self.config_entry.options.get(
+                            "scan_interval",
+                            self.config_entry.data.get("scan_interval", 5),
+                        ),
+                    ): vol.All(cv.positive_int, vol.Clamp(min=1, max=60))
+                }
+            ),
         )

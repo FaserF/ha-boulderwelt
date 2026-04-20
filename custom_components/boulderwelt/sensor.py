@@ -7,12 +7,16 @@ from .const import DOMAIN, ATTRIBUTION
 
 _LOGGER = logging.getLogger(__name__)
 
+
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Boulderwelt sensor based on a config entry."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     boulder_hall = entry.data["boulder_hall"]
 
-    async_add_entities([BoulderweltSensor(coordinator, boulder_hall, entry.entry_id)], True)
+    async_add_entities(
+        [BoulderweltSensor(coordinator, boulder_hall, entry.entry_id)], True
+    )
+
 
 class BoulderweltSensor(CoordinatorEntity, SensorEntity):
     """Representation of a Boulderwelt occupancy sensor."""
@@ -29,7 +33,7 @@ class BoulderweltSensor(CoordinatorEntity, SensorEntity):
         self._name = name
         self._attr_extra_state_attributes = {
             "attribution": ATTRIBUTION,
-            "hall_name": name
+            "hall_name": name,
         }
         self._attr_unique_id = f"{entry_id}_occupancy"
 

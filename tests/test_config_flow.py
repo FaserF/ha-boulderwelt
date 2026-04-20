@@ -1,9 +1,9 @@
-from unittest.mock import patch, MagicMock
-import pytest
+from unittest.mock import patch
 from homeassistant import config_entries, data_entry_flow
 from homeassistant.core import HomeAssistant
 
 from custom_components.boulderwelt.const import DOMAIN
+
 
 async def test_config_flow_user_step(hass: HomeAssistant):
     """Test the user step of the config flow."""
@@ -22,7 +22,11 @@ async def test_config_flow_user_step(hass: HomeAssistant):
 
     assert result["type"] == data_entry_flow.FlowResultType.CREATE_ENTRY
     assert result["title"] == "Boulderwelt München Ost"
-    assert result["data"] == {"boulder_hall": "Boulderwelt München Ost", "scan_interval": 10}
+    assert result["data"] == {
+        "boulder_hall": "Boulderwelt München Ost",
+        "scan_interval": 10,
+    }
+
 
 async def test_config_flow_duplicate(hass: HomeAssistant):
     """Test duplicate entry logic (uniqueness test)."""

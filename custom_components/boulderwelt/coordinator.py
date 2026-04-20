@@ -8,6 +8,7 @@ from .const import DOMAIN, BOULDER_HALL_URLS
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching Boulderwelt data."""
 
@@ -48,7 +49,9 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
                 if data.get("success") is True and "level" in data:
                     return data
 
-                _LOGGER.warning("Invalid API response for %s: %s", self.boulder_hall, data)
+                _LOGGER.warning(
+                    "Invalid API response for %s: %s", self.boulder_hall, data
+                )
                 return {"level": 0}
 
         except Exception as err:
