@@ -13,10 +13,12 @@ async def test_coordinator_update_data_success(hass: HomeAssistant):
 
     coordinator = BoulderweltDataUpdateCoordinator(hass, "Boulderwelt München Ost", 5)
 
-    with patch(
-        "homeassistant.helpers.aiohttp_client.async_get_clientsession"
-    ) as mock_session, patch("homeassistant.util.dt.now", return_value=test_time):
-
+    with (
+        patch(
+            "homeassistant.helpers.aiohttp_client.async_get_clientsession"
+        ) as mock_session,
+        patch("homeassistant.util.dt.now", return_value=test_time),
+    ):
         mock_response = MagicMock()
         mock_response.status = 200
         mock_response.json = AsyncMock(return_value={"level": 50, "success": True})
@@ -48,10 +50,12 @@ async def test_coordinator_update_data_fail(hass: HomeAssistant):
     test_time = dt_util.parse_datetime("2024-01-01 10:00:00")
     coordinator = BoulderweltDataUpdateCoordinator(hass, "Boulderwelt München Ost", 5)
 
-    with patch(
-        "homeassistant.helpers.aiohttp_client.async_get_clientsession"
-    ) as mock_session, patch("homeassistant.util.dt.now", return_value=test_time):
-
+    with (
+        patch(
+            "homeassistant.helpers.aiohttp_client.async_get_clientsession"
+        ) as mock_session,
+        patch("homeassistant.util.dt.now", return_value=test_time),
+    ):
         mock_response = MagicMock()
         mock_response.status = 500
         mock_response.raise_for_status.side_effect = Exception("API Error")

@@ -30,12 +30,15 @@ async def test_config_flow_user_step(hass: HomeAssistant):
 
 async def test_config_flow_duplicate(hass: HomeAssistant):
     """Test duplicate entry logic (uniqueness test)."""
-    with patch(
-        "custom_components.boulderwelt.config_flow.BoulderweltConfigFlow.async_set_unique_id",
-        return_value=None,
-    ), patch(
-        "custom_components.boulderwelt.config_flow.BoulderweltConfigFlow._abort_if_unique_id_configured",
-        side_effect=data_entry_flow.AbortFlow("already_configured"),
+    with (
+        patch(
+            "custom_components.boulderwelt.config_flow.BoulderweltConfigFlow.async_set_unique_id",
+            return_value=None,
+        ),
+        patch(
+            "custom_components.boulderwelt.config_flow.BoulderweltConfigFlow._abort_if_unique_id_configured",
+            side_effect=data_entry_flow.AbortFlow("already_configured"),
+        ),
     ):
         result = await hass.config_entries.flow.async_init(
             DOMAIN,
