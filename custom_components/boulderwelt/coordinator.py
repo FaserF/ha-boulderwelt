@@ -32,15 +32,18 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
         # The API might be down or return static data.
         # Use 00:00 to 07:00 as closed window (Munich halls open at 07:00)
         # Hamburg/Dortmund etc might differ, but this is a safe "night" range.
-        if dt_util.parse_time("00:00") <= current_time < dt_util.parse_time("07:00"):
+        start_time = dt_util.parse_time("00:00")
+        end_time = dt_util.parse_time("07:00")
+        if start_time and end_time and start_time <= current_time < end_time:
             _LOGGER.debug("Hall is closed (00:00 - 07:00), returning 0%% occupancy")
             return {"level": 0}
 
         try:
+            import aiohttp
             session = aiohttp_client.async_get_clientsession(self.hass)
             _LOGGER.debug("Fetching data for %s from %s", self.boulder_hall, self.url)
 
-            async with session.get(self.url, timeout=15) as response:
+            async with session.get(self.url, timeout=aiohttp.ClientTimeout(total=15)) as response:
                 response.raise_for_status()
                 data = await response.json()
 

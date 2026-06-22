@@ -51,9 +51,10 @@ class BoulderweltConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore
 class BoulderweltOptionsFlowHandler(config_entries.OptionsFlow):
     """Handle an options flow for Boulderwelt."""
 
-    def __init__(self, config_entry: config_entries.ConfigEntry):
+    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
         """Initialize options flow."""
-        self.config_entry = config_entry
+        super().__init__()
+        self._config_entry = config_entry
 
     async def async_step_init(self, user_input=None):
         """Manage the options."""

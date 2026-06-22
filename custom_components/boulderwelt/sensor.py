@@ -37,13 +37,14 @@ class BoulderweltSensor(CoordinatorEntity, SensorEntity):
         }
         self._attr_unique_id = f"{entry_id}_occupancy"
 
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, entry_id)},
-            "name": name,
-            "manufacturer": "Boulderwelt",
-            "model": "Crowd Indicator",
-            "configuration_url": self.coordinator.url,
-        }
+        from homeassistant.helpers.device_registry import DeviceInfo
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry_id)},
+            name=name,
+            manufacturer="Boulderwelt",
+            model="Crowd Indicator",
+            configuration_url=coordinator.url,
+        )
 
     @property
     def native_value(self):
