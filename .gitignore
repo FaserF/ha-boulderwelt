@@ -3,3 +3,10 @@ megalinter-reports/
 github_conf/
 /tests/__pycache__
 test_output.txt
+
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+.venv/
+*.pyc
