@@ -214,7 +214,8 @@ jobs:
 
       - name: 📦 Zip Component
         run: |
-          zip -r boulderwelt.zip custom_components/boulderwelt
+          cd custom_components/boulderwelt
+          zip -r ../../boulderwelt.zip .
 
       - name: Download Release Body Artifact
         uses: actions/download-artifact@v8
