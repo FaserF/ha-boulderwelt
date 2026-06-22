@@ -38,6 +38,7 @@ class BoulderweltSensor(CoordinatorEntity, SensorEntity):
         self._attr_unique_id = f"{entry_id}_occupancy"
 
         from homeassistant.helpers.device_registry import DeviceInfo
+
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry_id)},
             name=name,
