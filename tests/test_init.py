@@ -94,4 +94,3 @@ async def test_coordinator_update_data_api_success_false(hass: HomeAssistant):
 
         with pytest.raises(UpdateFailed):
             await coordinator._async_update_data()
-
