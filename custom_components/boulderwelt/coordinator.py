@@ -55,11 +55,10 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
                 if data.get("success") is True and "level" in data:
                     return data
 
-                _LOGGER.warning(
-                    "Invalid API response for %s: %s", self.boulder_hall, data
-                )
-                return {"level": 0}
+                raise UpdateFailed(f"Invalid API response: {data}")
 
+        except UpdateFailed:
+            raise
         except Exception as err:
             _LOGGER.error("Error fetching data for %s: %s", self.boulder_hall, err)
             raise UpdateFailed(f"Error communicating with API: {err}") from err
