@@ -1,6 +1,7 @@
 # Boulderwelt Home Assistant Integration 🧗‍♂️
 
 [![GitHub Release](https://img.shields.io/github/release/FaserF/ha-boulderwelt.svg?style=flat-square)](https://github.com/FaserF/ha-boulderwelt/releases)
+[![Downloads (Current release)](https://img.shields.io/github/downloads/FaserF/ha-boulderwelt/latest/integration.zip?label=Downloads%20(Current%20release)&style=flat-square)](https://github.com/FaserF/ha-boulderwelt/releases)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/FaserF/ha-boulderwelt/ci.yml?branch=main&style=flat-square)](https://github.com/FaserF/ha-boulderwelt/actions)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=flat-square)](https://github.com/hacs/integration)
 [![GitHub Sponsors](https://img.shields.io/badge/sponsor-GitHub-pink.svg?style=flat-square)](https://github.com/sponsors/FaserF)
