@@ -1,7 +1,7 @@
 # Boulderwelt Home Assistant Integration 🧗‍♂️
 
 [![GitHub Release](https://img.shields.io/github/release/FaserF/ha-boulderwelt.svg?style=flat-square)](https://github.com/FaserF/ha-boulderwelt/releases)
-[![Downloads (Current release)](https://img.shields.io/github/downloads/FaserF/ha-boulderwelt/latest/integration.zip?label=Downloads%20(Current%20release)&style=flat-square)](https://github.com/FaserF/ha-boulderwelt/releases)
+[![Downloads (Current release)](https://img.shields.io/github/downloads/FaserF/ha-boulderwelt/latest/boulderwelt.zip?label=Downloads%20(Current%20release)&style=flat-square)](https://github.com/FaserF/ha-boulderwelt/releases)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/FaserF/ha-boulderwelt/ci.yml?branch=main&style=flat-square)](https://github.com/FaserF/ha-boulderwelt/actions)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=flat-square)](https://github.com/hacs/integration)
 [![GitHub Sponsors](https://img.shields.io/badge/sponsor-GitHub-pink.svg?style=flat-square)](https://github.com/sponsors/FaserF)
@@ -10,6 +10,22 @@ Monitor the real-time occupancy of your favorite **Boulderwelt** hall directly i
 
 ---
 
+---
+
+## ❤️ Support This Project
+
+> I maintain this integration in my **free time alongside my regular job** — bug hunting, new features, and testing on real hardware. Test devices cost money, and every donation helps me stay independent and free up more time for open-source work.
+>
+> Donations are completely voluntary — but the more support I receive, the less I depend on other income sources and the more time I can realistically invest into these GitHub projects. 💪
+
+<div align="center">
+
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor%20on-GitHub-%23EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/FaserF)&nbsp;&nbsp;
+[![PayPal](https://img.shields.io/badge/Donate%20via-PayPal-%2300457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/FaserF)
+
+</div>
+
+---
 ## Features ✨
 
 - **Live Occupancy**: Real-time percentage of hall utilization.
