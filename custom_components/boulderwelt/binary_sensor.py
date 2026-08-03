@@ -1,11 +1,12 @@
 import logging
+
 from homeassistant.components.binary_sensor import (
-    BinarySensorEntity,
     BinarySensorDeviceClass,
+    BinarySensorEntity,
 )
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, ATTRIBUTION
+from .const import ATTRIBUTION, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -1,6 +1,6 @@
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
 from homeassistant.const import Platform
+from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
 from .coordinator import BoulderweltDataUpdateCoordinator

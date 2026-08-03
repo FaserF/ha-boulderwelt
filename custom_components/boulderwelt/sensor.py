@@ -1,9 +1,10 @@
 import logging
+
 from homeassistant.components.sensor import SensorEntity, SensorStateClass
 from homeassistant.const import PERCENTAGE
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, ATTRIBUTION
+from .const import ATTRIBUTION, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 

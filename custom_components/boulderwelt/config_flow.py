@@ -1,11 +1,12 @@
 from typing import Any
+
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv
 
-from .const import DOMAIN, BOULDER_HALLS
+from .const import BOULDER_HALLS, DOMAIN
 
 
 class BoulderweltConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore
