@@ -91,7 +91,6 @@ async def test_coordinator_update_data_api_success_false(hass: HomeAssistant):
             mock_response
         )
 
-        from homeassistant.helpers.update_coordinator import UpdateFailed
-
-        with pytest.raises(UpdateFailed):
-            await coordinator._async_update_data()
+        data = await coordinator._async_update_data()
+        assert data["level"] == 0
+        assert data["success"] is False

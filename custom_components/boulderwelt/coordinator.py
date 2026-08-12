@@ -56,6 +56,13 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
                 if data.get("success") is True and "level" in data:
                     return data
 
+                if data.get("success") is False:
+                    _LOGGER.debug(
+                        "API returned success: False for %s, hall is likely closed",
+                        self.boulder_hall,
+                    )
+                    return {"level": 0, "success": False}
+
                 raise UpdateFailed(f"Invalid API response: {data}")
 
         except UpdateFailed:
