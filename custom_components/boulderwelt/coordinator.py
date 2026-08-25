@@ -46,7 +46,7 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER.debug("Fetching data for %s from %s", self.boulder_hall, self.url)
 
             async with session.get(
-                self.url, timeout=aiohttp.ClientTimeout(total=15)
+                self.url, timeout=aiohttp.ClientTimeout(total=5)
             ) as response:
                 response.raise_for_status()
                 data = await response.json()
