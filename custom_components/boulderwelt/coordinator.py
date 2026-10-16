@@ -1,4 +1,3 @@
-import asyncio
 import logging
 from datetime import timedelta
 
@@ -79,7 +78,7 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
 
         except UpdateFailed:
             raise
-        except asyncio.TimeoutError as err:
+        except TimeoutError as err:
             _LOGGER.error("Timeout fetching data for %s: %s", self.boulder_hall, err)
             raise UpdateFailed(f"Timeout communicating with API: {err}") from err
         except aiohttp.ClientError as err:

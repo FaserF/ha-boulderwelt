@@ -2,7 +2,12 @@ from typing import Any
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
+from homeassistant.config_entries import ConfigFlow
+
+try:
+    from homeassistant.config_entries import ConfigFlowResult
+except ImportError:
+    ConfigFlowResult = Any
 from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv
 
