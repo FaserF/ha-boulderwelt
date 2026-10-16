@@ -31,7 +31,7 @@ class BoulderweltConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore
 
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema(
+            data_schema=vol.Schema(  # type: ignore[arg-type]
                 {
                     vol.Required("boulder_hall"): vol.In(sorted(BOULDER_HALLS)),
                     vol.Optional("scan_interval", default=5): vol.All(
@@ -64,7 +64,7 @@ class BoulderweltOptionsFlowHandler(config_entries.OptionsFlow):
 
         return self.async_show_form(
             step_id="init",
-            data_schema=vol.Schema(
+            data_schema=vol.Schema(  # type: ignore[arg-type]
                 {
                     vol.Optional(
                         "scan_interval",

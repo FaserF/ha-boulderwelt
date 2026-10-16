@@ -45,11 +45,26 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
             session = aiohttp_client.async_get_clientsession(self.hass)
             _LOGGER.debug("Fetching data for %s from %s", self.boulder_hall, self.url)
 
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "Accept": "application/json",
+            }
+
             async with session.get(
-                self.url, timeout=aiohttp.ClientTimeout(total=5)
+                self.url,
+                timeout=aiohttp.ClientTimeout(total=10),
+                headers=headers,
             ) as response:
                 response.raise_for_status()
-                data = await response.json()
+                try:
+                    data = await response.json(content_type=None)
+                except (ValueError, aiohttp.ContentTypeError) as err:
+                    _LOGGER.error(
+                        "Failed to parse JSON response from %s: %s",
+                        self.boulder_hall,
+                        err,
+                    )
+                    raise UpdateFailed(f"Invalid JSON response: {err}") from err
 
                 _LOGGER.debug("Received data for %s: %s", self.boulder_hall, data)
 
@@ -67,6 +82,14 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
 
         except UpdateFailed:
             raise
+        except TimeoutError as err:
+            _LOGGER.error("Timeout fetching data for %s: %s", self.boulder_hall, err)
+            raise UpdateFailed(f"Timeout communicating with API: {err}") from err
+        except aiohttp.ClientError as err:
+            _LOGGER.error(
+                "Client error fetching data for %s: %s", self.boulder_hall, err
+            )
+            raise UpdateFailed(f"Error communicating with API: {err}") from err
         except Exception as err:
             _LOGGER.error("Error fetching data for %s: %s", self.boulder_hall, err)
             raise UpdateFailed(f"Error communicating with API: {err}") from err
