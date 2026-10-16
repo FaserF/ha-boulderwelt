@@ -2,12 +2,7 @@ from typing import Any
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.config_entries import ConfigFlow
-
-try:
-    from homeassistant.config_entries import ConfigFlowResult
-except ImportError:
-    ConfigFlowResult = Any
+from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv
 
@@ -36,7 +31,7 @@ class BoulderweltConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore
 
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema(
+            data_schema=vol.Schema(  # type: ignore[arg-type]
                 {
                     vol.Required("boulder_hall"): vol.In(sorted(BOULDER_HALLS)),
                     vol.Optional("scan_interval", default=5): vol.All(
@@ -69,7 +64,7 @@ class BoulderweltOptionsFlowHandler(config_entries.OptionsFlow):
 
         return self.async_show_form(
             step_id="init",
-            data_schema=vol.Schema(
+            data_schema=vol.Schema(  # type: ignore[arg-type]
                 {
                     vol.Optional(
                         "scan_interval",
