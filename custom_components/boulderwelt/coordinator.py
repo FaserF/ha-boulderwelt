@@ -59,7 +59,11 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
                 try:
                     data = await response.json(content_type=None)
                 except (ValueError, aiohttp.ContentTypeError) as err:
-                    _LOGGER.error("Failed to parse JSON response from %s: %s", self.boulder_hall, err)
+                    _LOGGER.error(
+                        "Failed to parse JSON response from %s: %s",
+                        self.boulder_hall,
+                        err,
+                    )
                     raise UpdateFailed(f"Invalid JSON response: {err}") from err
 
                 _LOGGER.debug("Received data for %s: %s", self.boulder_hall, data)
@@ -82,7 +86,9 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER.error("Timeout fetching data for %s: %s", self.boulder_hall, err)
             raise UpdateFailed(f"Timeout communicating with API: {err}") from err
         except aiohttp.ClientError as err:
-            _LOGGER.error("Client error fetching data for %s: %s", self.boulder_hall, err)
+            _LOGGER.error(
+                "Client error fetching data for %s: %s", self.boulder_hall, err
+            )
             raise UpdateFailed(f"Error communicating with API: {err}") from err
         except Exception as err:
             _LOGGER.error("Error fetching data for %s: %s", self.boulder_hall, err)
