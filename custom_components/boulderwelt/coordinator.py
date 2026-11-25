@@ -50,35 +50,51 @@ class BoulderweltDataUpdateCoordinator(DataUpdateCoordinator):
                 "Accept": "application/json",
             }
 
-            async with session.get(
-                self.url,
-                timeout=aiohttp.ClientTimeout(total=10),
-                headers=headers,
-            ) as response:
-                response.raise_for_status()
+            timeout = aiohttp.ClientTimeout(total=25)
+            last_err: TimeoutError | None = None
+            for attempt in range(2):
                 try:
-                    data = await response.json(content_type=None)
-                except (ValueError, aiohttp.ContentTypeError) as err:
-                    _LOGGER.error(
-                        "Failed to parse JSON response from %s: %s",
-                        self.boulder_hall,
-                        err,
-                    )
-                    raise UpdateFailed(f"Invalid JSON response: {err}") from err
+                    async with session.get(
+                        self.url,
+                        timeout=timeout,
+                        headers=headers,
+                    ) as response:
+                        response.raise_for_status()
+                        try:
+                            data = await response.json(content_type=None)
+                        except (ValueError, aiohttp.ContentTypeError) as err:
+                            _LOGGER.error(
+                                "Failed to parse JSON response from %s: %s",
+                                self.boulder_hall,
+                                err,
+                            )
+                            raise UpdateFailed(f"Invalid JSON response: {err}") from err
 
-                _LOGGER.debug("Received data for %s: %s", self.boulder_hall, data)
+                        _LOGGER.debug("Received data for %s: %s", self.boulder_hall, data)
 
-                if data.get("success") is True and "level" in data:
-                    return data
+                        if data.get("success") is True and "level" in data:
+                            return data
 
-                if data.get("success") is False:
-                    _LOGGER.debug(
-                        "API returned success: False for %s, hall is likely closed",
-                        self.boulder_hall,
-                    )
-                    return {"level": 0, "success": False}
+                        if data.get("success") is False:
+                            _LOGGER.debug(
+                                "API returned success: False for %s, hall is likely closed",
+                                self.boulder_hall,
+                            )
+                            return {"level": 0, "success": False}
 
-                raise UpdateFailed(f"Invalid API response: {data}")
+                        raise UpdateFailed(f"Invalid API response: {data}")
+                except TimeoutError as err:
+                    last_err = err
+                    if attempt == 0:
+                        _LOGGER.debug(
+                            "Timeout fetching data for %s (attempt %d), retrying: %s",
+                            self.boulder_hall,
+                            attempt + 1,
+                            err,
+                        )
+                        continue
+            assert last_err is not None
+            raise last_err
 
         except UpdateFailed:
             raise
